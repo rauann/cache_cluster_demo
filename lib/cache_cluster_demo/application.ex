@@ -20,7 +20,8 @@ defmodule CacheClusterDemo.Application do
        [
          Application.get_env(:libcluster, :topologies, []),
          [name: CacheClusterDemo.ClusterSupervisor]
-       ]}
+       ]},
+      {MyCache.Cache, []}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

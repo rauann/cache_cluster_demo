@@ -16,6 +16,6 @@ defmodule CacheClusterDemoWeb.Router do
 
     get "/healthcheck", CacheClusterDemoWeb.HealthCheckController, :index
 
-    live_dashboard "/dashboard", metrics: CacheClusterDemoWeb.Telemetry
+    live_dashboard "/dashboard", metrics: CacheClusterDemo.Telemetry
   end
 end
