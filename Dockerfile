@@ -33,7 +33,7 @@ EXPOSE 9000-9010
 EXPOSE 9090
 
 # install build dependencies
-RUN apt-get update -y && apt-get install -y build-essential git curl jq \
+RUN apt-get update -y && apt-get install -y build-essential git \
     && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
 # prepare build dir
@@ -75,7 +75,7 @@ RUN mix release
 FROM ${RUNNER_IMAGE}
 
 RUN apt-get update -y && \
-  apt-get install -y libstdc++6 openssl libncurses5 locales ca-certificates \
+  apt-get install -y libstdc++6 openssl libncurses5 locales ca-certificates curl jq \
   && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
 # Set the locale
