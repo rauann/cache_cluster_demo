@@ -37,12 +37,14 @@ resource "aws_iam_user_policy" "ecs-fargate-deploy" {
   "Statement": [
     {
       "Action": [
-        "ecs:UpdateService",
         "ecs:DescribeServices",
         "ecs:DescribeTaskDefinition",
         "ecs:DescribeTasks",
+        "ecs:ListTasks",
         "ecs:RegisterTaskDefinition",
-        "ecs:ListTasks"
+        "ecs:UpdateService",
+        "iam:GetRole",
+        "iam:PassRole"
       ],
       "Effect": "Allow",
       "Resource": "*"
