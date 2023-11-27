@@ -45,11 +45,12 @@ resource "aws_ecs_task_definition" "cache_cluster_demo" {
   memory                   = var.ecs_fargate_application_mem
   network_mode             = "awsvpc"
   execution_role_arn       = aws_iam_role.ecsTaskExecutionRole.arn
+  task_role_arn            = aws_iam_role.ecsTaskExecutionRole.arn
   container_definitions    = <<DEFINITION
 [
   {
     "environment": [
-      {"name": "SECRET_KEY_BASE", "value": "generate one with mix phx.gen.secret"}
+      {"name": "SECRET_KEY_BASE", "value": "9fDANWSr61sEAqZ7EFWa7STYdy7TUdfZX5lgHpf98XgKrgYk1L69YdecijarZCSS"}
     ],
     "image": "${aws_ecr_repository.cache_cluster_demo_repo.repository_url}:latest",
     "name": "${var.environment_name}-${var.name}",
@@ -73,11 +74,12 @@ DEFINITION
 
 
 resource "aws_ecs_service" "cache_cluster_demo" {
-  name            = "${var.environment_name}-${var.name}-service"
-  cluster         = aws_ecs_cluster.default.id
-  launch_type     = "FARGATE"
-  task_definition = aws_ecs_task_definition.cache_cluster_demo.arn
-  desired_count   = var.ecs_application_count
+  name                   = "${var.environment_name}-${var.name}-service"
+  cluster                = aws_ecs_cluster.default.id
+  launch_type            = "FARGATE"
+  task_definition        = aws_ecs_task_definition.cache_cluster_demo.arn
+  desired_count          = var.ecs_application_count
+  enable_execute_command = true
 
   load_balancer {
     target_group_arn = aws_lb_target_group.cache_cluster_demo.arn
