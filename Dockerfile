@@ -33,7 +33,7 @@ EXPOSE 9000-9010
 EXPOSE 9090
 
 # install build dependencies
-RUN apt-get update -y && apt-get install -y build-essential git install curl jq \
+RUN apt-get update -y && apt-get install -y build-essential git curl jq \
     && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
 # prepare build dir
