@@ -40,6 +40,7 @@ resource "aws_iam_user_policy" "ecs-fargate-deploy" {
         "ecs:DescribeServices",
         "ecs:DescribeTaskDefinition",
         "ecs:DescribeTasks",
+        "ecs:ExecuteCommand",
         "ecs:ListTasks",
         "ecs:RegisterTaskDefinition",
         "ecs:UpdateService",
