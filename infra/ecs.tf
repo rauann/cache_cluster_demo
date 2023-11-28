@@ -46,7 +46,7 @@ resource "aws_ecs_task_definition" "cache_cluster_demo" {
   network_mode             = "awsvpc"
   execution_role_arn       = aws_iam_role.ecsTaskExecutionRole.arn
   task_role_arn            = aws_iam_role.ecsTaskExecutionRole.arn
-  container_definitions    = <<DEFINITION
+  container_definitions    = <<TASK_DEFINITION
 [
   {
     "environment": [
@@ -59,6 +59,9 @@ resource "aws_ecs_task_definition" "cache_cluster_demo" {
             "containerPort": 4000
         }
       ],
+    "linuxParameters": {
+      "initProcessEnabled": true
+    },
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
@@ -69,7 +72,7 @@ resource "aws_ecs_task_definition" "cache_cluster_demo" {
     }
   }
 ]
-DEFINITION
+TASK_DEFINITION
 }
 
 
