@@ -36,12 +36,6 @@ resource "aws_ecs_cluster" "default" {
   name       = "${var.environment_name}-${var.name}"
 }
 
-resource "aws_ssm_parameter" "release_cookie" {
-  name  = "${var.environment_name}-${var.name}-release_cookie"
-  type  = "String"
-  value = "sTlajn_v7LJTGEHmoHftcrYLAgKQhTjpKN28QDFdFNhfAj02NPISgQ=="
-}
-
 # Task definition for the application
 
 resource "aws_ecs_task_definition" "cache_cluster_demo" {
@@ -56,8 +50,7 @@ resource "aws_ecs_task_definition" "cache_cluster_demo" {
 [
   {
     "environment": [
-      {"name": "SECRET_KEY_BASE", "value": "9fDANWSr61sEAqZ7EFWa7STYdy7TUdfZX5lgHpf98XgKrgYk1L69YdecijarZCSS"},
-      {"name": "RELEASE_COOKIE", "value": "${aws_ssm_parameter.release_cookie.value}"}
+      {"name": "SECRET_KEY_BASE", "value": "9fDANWSr61sEAqZ7EFWa7STYdy7TUdfZX5lgHpf98XgKrgYk1L69YdecijarZCSS"}
     ],
     "image": "${aws_ecr_repository.cache_cluster_demo_repo.repository_url}:latest",
     "name": "${var.environment_name}-${var.name}",
