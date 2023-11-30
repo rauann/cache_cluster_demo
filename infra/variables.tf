@@ -7,19 +7,19 @@ variable "name" {
 variable "environment_name" {
   type        = string
   description = "Current environment"
-  default     = "development"
+  default     = "dev"
 }
 
 variable "aws_region" {
   type        = string
   description = "Region of the resources"
-  default     = "eu-north-1"
+  default     = "us-east-1"
 }
 
 variable "aws_default_zone" {
   type        = string
   description = "The AWS region where the resources will be created"
-  default     = "eu-north-1"
+  default     = "us-east-1"
 }
 
 variable "ecs_fargate_application_cpu" {
