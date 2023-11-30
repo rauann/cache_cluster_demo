@@ -36,6 +36,27 @@ resource "aws_ecs_cluster" "default" {
   name       = "${var.environment_name}-${var.name}"
 }
 
+resource "aws_service_discovery_private_dns_namespace" "dns_namespace" {
+  name        = "${var.environment_name}-${var.name}.local"
+  description = "ECS Service Discovery namespace for ${var.environment_name}-${var.name}"
+  vpc         = aws_vpc.default.id
+}
+
+resource "aws_service_discovery_service" "service_discovery" {
+  name = "${var.environment_name}-${var.name}"
+
+  dns_config {
+    namespace_id = aws_service_discovery_private_dns_namespace.dns_namespace.id
+
+    dns_records {
+      ttl  = 10
+      type = "A"
+    }
+
+    routing_policy = "MULTIVALUE"
+  }
+}
+
 # Task definition for the application
 
 resource "aws_ecs_task_definition" "cache_cluster_demo" {
@@ -98,6 +119,15 @@ resource "aws_ecs_service" "cache_cluster_demo" {
       aws_security_group.cache_cluster_demo_service.id
     ]
     subnets = [aws_subnet.private.id]
+  }
+
+  # This will create a service registry and register our services ip address when it starts up.
+  # It uses Route53 to do this by creating a private DNS entry that can be called anything you like.
+  # In the `aws_service_discovery_private_dns_namespace` definition, we called it `ecs_app.local`.
+  # When a new task starts up, it will be registered as an `A` record under that DNS namespace.
+  service_registries {
+    registry_arn   = aws_service_discovery_service.service_discovery.arn
+    container_name = "${var.environment_name}-${var.name}"
   }
 
   depends_on = [
