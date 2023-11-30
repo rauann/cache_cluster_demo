@@ -14,7 +14,7 @@ config :libcluster,
       strategy: Cluster.Strategy.DNSPoll,
       config: [
         polling_interval: 5_000,
-        query: "development-cache-cluster-demo.local",
+        query: "dev-cache-cluster-demo.local",
         node_basename: "cache_cluster_demo"
       ]
     ]
