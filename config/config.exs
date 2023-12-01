@@ -29,7 +29,7 @@ config :cache_cluster_demo, CacheClusterDemoWeb.Endpoint,
   url: [host: "localhost"],
   adapter: Phoenix.Endpoint.Cowboy2Adapter,
   render_errors: [
-    formats: [json: CacheClusterDemo.ErrorJSON],
+    formats: [json: CacheClusterDemoWeb.ErrorJSON],
     layout: false
   ],
   pubsub_server: CacheClusterDemo.PubSub,
