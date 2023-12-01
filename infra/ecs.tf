@@ -23,6 +23,33 @@ resource "aws_iam_role_policy_attachment" "ecs_task_exec_role" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
+resource "aws_iam_policy" "ecsTaskCommandExecPolicy" {
+  name   = "ecsTaskCommandExecPolicy"
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+      {
+          "Effect": "Allow",
+          "Action": [
+              "ssmmessages:CreateControlChannel",
+              "ssmmessages:CreateDataChannel",
+              "ssmmessages:OpenControlChannel",
+              "ssmmessages:OpenDataChannel"
+          ],
+          "Resource": "*"
+      }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_policy_attachment" "ecs_task_command_exec_role" {
+  name       = "attach-ecs-task-command-exec-policy"
+  roles      = [aws_iam_role.ecsTaskExecutionRole.name]
+  policy_arn = aws_iam_policy.ecsTaskCommandExecPolicy.arn
+}
+
 # Cloudwatch logs
 
 resource "aws_cloudwatch_log_group" "cache_cluster_demo" {
