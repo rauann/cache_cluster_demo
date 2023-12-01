@@ -20,18 +20,6 @@ ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
 
 FROM ${BUILDER_IMAGE} as builder
 
-# Default Phoenix server port
-EXPOSE 4000
-
-# Erlang EPMD port
-EXPOSE 4369
-
-# Intra-Erlang communication ports
-EXPOSE 9000-9010
-
-# :erpc default port
-EXPOSE 9090
-
 # install build dependencies
 RUN apt-get update -y && apt-get install -y build-essential git \
     && apt-get clean && rm -f /var/lib/apt/lists/*_*

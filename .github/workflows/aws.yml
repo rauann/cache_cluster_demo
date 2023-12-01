@@ -5,11 +5,11 @@ on:
       - main
 
 env:
-  AWS_REGION: eu-north-1
-  CONTAINER_NAME: development-cache-cluster-demo
-  ECR_REPOSITORY: development-cache-cluster-demo
-  ECS_CLUSTER: development-cache-cluster-demo
-  ECS_SERVICE: development-cache-cluster-demo-service
+  AWS_REGION: us-east-1
+  CONTAINER_NAME: dev-cache-cluster-demo
+  ECR_REPOSITORY: dev-cache-cluster-demo
+  ECS_CLUSTER: dev-cache-cluster-demo
+  ECS_SERVICE: dev-cache-cluster-demo-service
 
 jobs:
   deploy:
@@ -45,7 +45,7 @@ jobs:
 
       - name: Download task definition
         run: |
-          aws ecs describe-task-definition --task-definition development-cache-cluster-demo-td --query taskDefinition > task-definition.json
+          aws ecs describe-task-definition --task-definition dev-cache-cluster-demo-td --query taskDefinition > task-definition.json
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def

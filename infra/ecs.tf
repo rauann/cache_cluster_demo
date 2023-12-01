@@ -73,11 +73,14 @@ resource "aws_ecs_task_definition" "cache_cluster_demo" {
     "environment": [
       {"name": "SECRET_KEY_BASE", "value": "9fDANWSr61sEAqZ7EFWa7STYdy7TUdfZX5lgHpf98XgKrgYk1L69YdecijarZCSS"}
     ],
+    "essential": true,
     "image": "${aws_ecr_repository.cache_cluster_demo_repo.repository_url}:latest",
     "name": "${var.environment_name}-${var.name}",
     "portMappings": [
         {
-            "containerPort": 4000
+            "containerPort": 4000,
+            "hostPort": 4000,
+            "protocol": "tcp"
         }
       ],
     "linuxParameters": {
