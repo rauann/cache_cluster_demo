@@ -17,12 +17,9 @@ resource "aws_lb_target_group" "lb_target_group" {
   target_type = "ip"
 
   health_check {
-    enabled             = true
-    path                = "/healthcheck"
-    matcher             = "200"
-    interval            = 300
-    unhealthy_threshold = 10
-    timeout             = 25
+    enabled = true
+    path    = "/healthcheck"
+    matcher = "200"
   }
 
   tags = {

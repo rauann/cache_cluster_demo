@@ -22,3 +22,5 @@ data "aws_subnet" "default_subnet" {
   count = length(data.aws_subnets.vpc_subnets.ids)
   id    = tolist(data.aws_subnets.vpc_subnets.ids)[count.index]
 }
+
+# terraform import aws_vpc.default vpc-09a618deab83667b2

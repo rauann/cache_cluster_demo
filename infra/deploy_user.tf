@@ -31,7 +31,7 @@ EOF
 resource "aws_iam_user_policy" "ecs-fargate-deploy" {
   user = aws_iam_user.ci_user.name
 
-  policy = <<POLICY
+  policy = <<EOF
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -52,5 +52,5 @@ resource "aws_iam_user_policy" "ecs-fargate-deploy" {
     }
   ]
 }
-POLICY
+EOF
 }
