@@ -20,7 +20,7 @@ resource "aws_lb_target_group" "lb_target_group" {
     enabled             = true
     path                = "/healthcheck"
     matcher             = "200"
-    interval            = 30
+    interval            = 300
     unhealthy_threshold = 10
     timeout             = 25
   }
