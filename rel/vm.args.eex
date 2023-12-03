@@ -7,5 +7,6 @@
 ## Tweak GC to run more often
 ##-env ERL_FULLSWEEP_AFTER 10
 
-- kernel sync_nodes_optional '[${RELEASE_NODE}]'
-- kernel sync_nodes_timeout infinity
+# Do we need this erlang ports range definition?
+-kernel inet_dist_listen_min 9000
+-kernel inet_dist_listen_max 9010
