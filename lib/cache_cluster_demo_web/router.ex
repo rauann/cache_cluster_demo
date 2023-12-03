@@ -14,6 +14,7 @@ defmodule CacheClusterDemoWeb.Router do
   scope "/" do
     pipe_through [:fetch_session, :protect_from_forgery]
 
+    get "/", CacheClusterDemoWeb.NodesController, :index
     get "/healthcheck", CacheClusterDemoWeb.HealthCheckController, :index
 
     live_dashboard "/dashboard", metrics: CacheClusterDemo.Telemetry
