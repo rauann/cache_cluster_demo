@@ -86,7 +86,7 @@ resource "aws_service_discovery_service" "service_discovery" {
 
 # Task definition for the application
 
-resource "aws_ecs_task_definition" "cache_cluster_demo" {
+resource "aws_ecs_task_definition" "task_definition" {
   family                   = "${var.environment_name}-${var.name}-td"
   requires_compatibilities = ["FARGATE"]
   cpu                      = var.ecs_fargate_application_cpu
@@ -127,28 +127,24 @@ TASK_DEFINITION
 }
 
 
-resource "aws_ecs_service" "cache_cluster_demo" {
+resource "aws_ecs_service" "service" {
   name                   = "${var.environment_name}-${var.name}-service"
   cluster                = aws_ecs_cluster.default.id
   launch_type            = "FARGATE"
-  task_definition        = aws_ecs_task_definition.cache_cluster_demo.arn
+  task_definition        = aws_ecs_task_definition.task_definition.arn
   desired_count          = var.ecs_application_count
   enable_execute_command = true
 
   load_balancer {
-    target_group_arn = aws_lb_target_group.cache_cluster_demo.arn
+    target_group_arn = aws_lb_target_group.lb_target_group.arn
     container_name   = "${var.environment_name}-${var.name}"
     container_port   = 4000
   }
 
   network_configuration {
-    assign_public_ip = false
-
-    security_groups = [
-      aws_security_group.egress-all.id,
-      aws_security_group.cache_cluster_demo_service.id
-    ]
-    subnets = [aws_subnet.private.id]
+    assign_public_ip = true
+    security_groups  = [aws_security_group.security_group.id]
+    subnets          = data.aws_subnet.default_subnet.*.id
   }
 
   # This will create a service registry and register our services ip address when it starts up.
@@ -161,7 +157,7 @@ resource "aws_ecs_service" "cache_cluster_demo" {
   }
 
   depends_on = [
-    aws_lb_listener.cache_cluster_demo_http,
-    aws_ecs_task_definition.cache_cluster_demo
+    aws_lb_listener.ecs_listener,
+    aws_ecs_task_definition.task_definition
   ]
 }

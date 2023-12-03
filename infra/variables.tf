@@ -16,10 +16,10 @@ variable "aws_region" {
   default     = "us-east-1"
 }
 
-variable "aws_default_zone" {
+variable "vpc_id" {
   type        = string
-  description = "The AWS region where the resources will be created"
-  default     = "us-east-1"
+  description = "The default VPC ID"
+  default     = "vpc-09a618deab83667b2"
 }
 
 variable "ecs_fargate_application_cpu" {
