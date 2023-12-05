@@ -8,7 +8,8 @@ defmodule CacheClusterDemoWeb.NodesController do
       )
 
     response = %{
-      dns_ips: inspect(dns_ips),
+      lib_cluster_dns_ips: inspect(dns_ips),
+      dns_cluster_dns_nodes: inspect(DNSCluster.Resolver.list_nodes()),
       node: Node.self(),
       nodes: Node.list(),
       timestamp: DateTime.to_unix(DateTime.utc_now())
