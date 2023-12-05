@@ -10,14 +10,14 @@ config :cache_cluster_demo, CacheClusterDemoWeb.Endpoint, check_origin: ["//*.am
 
 # DNSPoll strategy configuration.
 # Cluster.Strategy.DNSPoll.lookup_all_ips(~c"dev-cache-cluster-demo.dev-cache-cluster-demo.local")
-config :libcluster,
-  topologies: [
-    ecs: [
-      strategy: Cluster.Strategy.DNSPoll,
-      config: [
-        polling_interval: 5_000,
-        query: "dev-cache-cluster-demo.dev-cache-cluster-demo.local",
-        node_basename: "cache_cluster_demo"
-      ]
-    ]
-  ]
+# config :libcluster,
+#   topologies: [
+#     ecs: [
+#       strategy: Cluster.Strategy.DNSPoll,
+#       config: [
+#         polling_interval: 5_000,
+#         query: "dev-cache-cluster-demo.dev-cache-cluster-demo.local",
+#         node_basename: "cache_cluster_demo"
+#       ]
+#     ]
+#   ]

@@ -13,11 +13,11 @@ defmodule CacheClusterDemo.Application do
        query: Application.get_env(:cache_cluster_demo, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: CacheClusterDemo.PubSub},
       CacheClusterDemoWeb.Endpoint,
-      {Cluster.Supervisor,
-       [
-         Application.get_env(:libcluster, :topologies, []),
-         [name: CacheClusterDemo.ClusterSupervisor]
-       ]},
+      # {Cluster.Supervisor,
+      #  [
+      #    Application.get_env(:libcluster, :topologies, []),
+      #    [name: CacheClusterDemo.ClusterSupervisor]
+      #  ]},
       {MyCache.CacheA, []},
       {MyCache.CacheB, []}
     ]
