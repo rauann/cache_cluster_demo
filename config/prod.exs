@@ -9,7 +9,6 @@ config :logger, level: :info
 config :cache_cluster_demo, CacheClusterDemoWeb.Endpoint, check_origin: ["//*.amazonaws.com"]
 
 # DNSPoll strategy configuration.
-# Cluster.Strategy.DNSPoll.lookup_all_ips(~c"dev-cache-cluster-demo.dev-cache-cluster-demo.local")
 # config :libcluster,
 #   topologies: [
 #     ecs: [
