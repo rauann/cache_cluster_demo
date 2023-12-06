@@ -36,6 +36,7 @@ defmodule CacheClusterDemo.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:libcluster, "~> 3.3"},
+      {:nebulex_adapters_cachex, "~> 2.1"},
       {:nebulex, "~> 2.5"},
       {:phoenix_live_dashboard, "~> 0.8.2"},
       {:phoenix, "~> 1.7.10"},
