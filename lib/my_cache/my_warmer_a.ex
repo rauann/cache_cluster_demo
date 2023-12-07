@@ -3,6 +3,8 @@ defmodule MyCache.MyWarmerA do
 
   require Logger
 
+  @schedule_interval 3_600_000
+
   def start_link(opts \\ []), do: GenServer.start_link(__MODULE__, opts)
 
   @impl true
@@ -32,5 +34,5 @@ defmodule MyCache.MyWarmerA do
     {:noreply, state}
   end
 
-  defp schedule_work, do: Process.send_after(self(), :work, 10_000)
+  defp schedule_work, do: Process.send_after(self(), :work, @schedule_interval)
 end
