@@ -19,6 +19,7 @@ defmodule CacheClusterDemo.MixProject do
   def application do
     [
       mod: {CacheClusterDemo.Application, []},
+      application: [:singleton],
       extra_applications: [:logger, :runtime_tools, :os_mon]
     ]
   end
@@ -36,11 +37,11 @@ defmodule CacheClusterDemo.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:libcluster, "~> 3.3"},
-      {:nebulex_adapters_cachex, "~> 2.1"},
       {:nebulex, "~> 2.5"},
       {:phoenix_live_dashboard, "~> 0.8.2"},
       {:phoenix, "~> 1.7.10"},
       {:plug_cowboy, "~> 2.5"},
+      {:singleton, "~> 1.3"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"}
     ]

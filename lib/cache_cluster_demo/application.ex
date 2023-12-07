@@ -9,8 +9,8 @@ defmodule CacheClusterDemo.Application do
   def start(_type, _args) do
     children = [
       CacheClusterDemo.Telemetry,
-      # {DNSCluster,
-      #  query: Application.get_env(:cache_cluster_demo, :dns_cluster_query) || :ignore},
+      {DNSCluster,
+       query: Application.get_env(:cache_cluster_demo, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: CacheClusterDemo.PubSub},
       CacheClusterDemoWeb.Endpoint,
       {Cluster.Supervisor,
@@ -20,7 +20,11 @@ defmodule CacheClusterDemo.Application do
        ]},
       {MyCache.CacheA, []},
       {MyCache.CacheB, []}
+      # {MyCache.MyWarmer, ~w(one two three)a}
     ]
+
+    {:ok, _pid} =
+      Singleton.start_child(MyCache.MyWarmerA, ~w(one two three)a, {:my_warmer, 1})
 
     opts = [strategy: :one_for_one, name: CacheClusterDemo.Supervisor]
     Supervisor.start_link(children, opts)
