@@ -86,6 +86,10 @@ resource "aws_service_discovery_service" "service_discovery" {
   }
 }
 
+resource "random_bytes" "secret_key_base" {
+  length = 64
+}
+
 # Task definition for the application
 resource "aws_ecs_task_definition" "task_definition" {
   family                   = "${var.environment_name}-${var.name}-td"
@@ -99,7 +103,7 @@ resource "aws_ecs_task_definition" "task_definition" {
 [
   {
     "environment": [
-      {"name": "SECRET_KEY_BASE", "value": "9fDANWSr61sEAqZ7EFWa7STYdy7TUdfZX5lgHpf98XgKrgYk1L69YdecijarZCSS"}
+      {"name": "SECRET_KEY_BASE", "value": "${random_bytes.secret_key_base.base64}"}
     ],
     "essential": true,
     "image": "${aws_ecr_repository.cache_cluster_demo_repo.repository_url}:latest",
