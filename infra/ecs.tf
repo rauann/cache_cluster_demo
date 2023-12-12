@@ -92,11 +92,11 @@ resource "random_bytes" "secret_key_base" {
 
 # Generate a release cookie for distributed Elixir nodes
 resource "random_password" "release_cookie" {
-  length  = 64
-  special = true
-  numeric = true
+  length  = 20
+  special = false
+  numeric = false
   upper   = true
-  lower   = true
+  lower   = false
 }
 
 # Task definition for the application
