@@ -11,14 +11,9 @@ defmodule CacheClusterDemo.Application do
   def start(_type, _args) do
     children = [
       CacheClusterDemo.Telemetry,
-      {DNSCluster, [query: get_dns_cluster_query(), log: :info]},
+      {DNSCluster, query: get_dns_cluster_query()},
       {Phoenix.PubSub, name: CacheClusterDemo.PubSub},
       CacheClusterDemoWeb.Endpoint,
-      {Cluster.Supervisor,
-       [
-         Application.get_env(:libcluster, :topologies, []),
-         [name: CacheClusterDemo.ClusterSupervisor]
-       ]},
       {MyCache.CacheA, []},
       {MyCache.CacheB, []},
       {Task, fn -> debug_nodes() end}
@@ -33,7 +28,7 @@ defmodule CacheClusterDemo.Application do
 
   @spec get_dns_cluster_query() :: String.t() | :ignore
   defp get_dns_cluster_query,
-    do: Application.get_env(:cache_cluster_demo, :dns_cluster_query) || :ignore
+    do: Application.get_env(:cache_cluster_demo, :dns_cluster_query, :ignore)
 
   defp debug_nodes() do
     Logger.info("RELEASE_COOKIE: #{System.get_env("RELEASE_COOKIE")}")
