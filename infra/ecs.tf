@@ -90,6 +90,15 @@ resource "random_bytes" "secret_key_base" {
   length = 64
 }
 
+# Generate a release cookie for distributed Elixir nodes
+resource "random_password" "release_cookie" {
+  length  = 64
+  special = true
+  numeric = true
+  upper   = true
+  lower   = true
+}
+
 # Task definition for the application
 resource "aws_ecs_task_definition" "task_definition" {
   family                   = "${var.environment_name}-${var.name}-td"
@@ -103,7 +112,9 @@ resource "aws_ecs_task_definition" "task_definition" {
 [
   {
     "environment": [
-      {"name": "SECRET_KEY_BASE", "value": "${random_bytes.secret_key_base.base64}"}
+      {"name": "SECRET_KEY_BASE", "value": "${random_bytes.secret_key_base.base64}"},
+      {"name": "DNS_CLUSTER_QUERY", "value": "${aws_service_discovery_private_dns_namespace.dns_namespace.name}"},
+      {"name": "RELEASE_COOKIE", "value": "${random_password.release_cookie.result}"}
     ],
     "essential": true,
     "image": "${aws_ecr_repository.cache_cluster_demo_repo.repository_url}:latest",
@@ -147,7 +158,7 @@ resource "aws_ecs_service" "service" {
   }
 
   network_configuration {
-    assign_public_ip = false
+    assign_public_ip = true
     security_groups  = [aws_security_group.security_group.id]
     subnets          = data.aws_subnet.default_subnet.*.id
   }
