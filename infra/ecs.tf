@@ -147,7 +147,7 @@ resource "aws_ecs_service" "service" {
   }
 
   network_configuration {
-    assign_public_ip = true
+    assign_public_ip = false
     security_groups  = [aws_security_group.security_group.id]
     subnets          = data.aws_subnet.default_subnet.*.id
   }
