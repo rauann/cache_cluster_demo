@@ -32,7 +32,8 @@ defmodule CacheClusterDemo.Application do
   end
 
   @spec get_dns_cluster_query() :: String.t() | :ignore
-  defp get_dns_cluster_query, do: Application.get_env(:core, :dns_cluster_query) || :ignore
+  defp get_dns_cluster_query,
+    do: Application.get_env(:cache_cluster_demo, :dns_cluster_query) || :ignore
 
   defp debug_nodes() do
     Logger.info("RELEASE_COOKIE: #{System.get_env("RELEASE_COOKIE")}")

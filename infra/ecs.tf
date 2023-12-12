@@ -112,9 +112,9 @@ resource "aws_ecs_task_definition" "task_definition" {
 [
   {
     "environment": [
-      {"name": "SECRET_KEY_BASE", "value": "${random_bytes.secret_key_base.base64}"},
-      {"name": "DNS_CLUSTER_QUERY", "value": "${aws_service_discovery_private_dns_namespace.dns_namespace.name}"},
-      {"name": "RELEASE_COOKIE", "value": "${random_password.release_cookie.result}"}
+      {"name": "DNS_CLUSTER_QUERY", "value": "${aws_service_discovery_service.service_discovery.name}.${aws_service_discovery_private_dns_namespace.dns_namespace.name}"},
+      {"name": "RELEASE_COOKIE", "value": "${random_password.release_cookie.result}"},
+      {"name": "SECRET_KEY_BASE", "value": "${random_bytes.secret_key_base.base64}"}
     ],
     "essential": true,
     "image": "${aws_ecr_repository.cache_cluster_demo_repo.repository_url}:latest",
