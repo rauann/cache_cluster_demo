@@ -11,7 +11,7 @@ defmodule CacheClusterDemo.Application do
   def start(_type, _args) do
     children = [
       CacheClusterDemo.Telemetry,
-      {DNSCluster, query: get_dns_cluster_query()},
+      {DNSCluster, [query: get_dns_cluster_query(), log: :info]},
       {Phoenix.PubSub, name: CacheClusterDemo.PubSub},
       CacheClusterDemoWeb.Endpoint,
       {Cluster.Supervisor,
@@ -37,7 +37,7 @@ defmodule CacheClusterDemo.Application do
 
   defp debug_nodes() do
     Logger.info("RELEASE_COOKIE: #{System.get_env("RELEASE_COOKIE")}")
-    Logger.info("DNS_CLUSTER_QUERY: #{System.get_env("DNS_CLUSTER_QUERY")}")
+    Logger.info("DNS_CLUSTER_QUERY: #{get_dns_cluster_query()}")
     Logger.info("NODE: #{inspect(Node.self())}")
     Logger.info("NODES: #{inspect(Node.list())}")
   end
