@@ -3,7 +3,7 @@ defmodule MyCache.MyWarmerA do
 
   require Logger
 
-  @schedule_interval 180_000
+  @schedule_interval 3_600_000
 
   def start_link(opts \\ []), do: GenServer.start_link(__MODULE__, opts)
 
